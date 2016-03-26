@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__. '/../config/connect.php');
+require_once(__DIR__ . '/../config/connect.php');
 
 if(isset($_GET['id']) || $_GET != ''){
     $id = $_GET['id'];

@@ -1,5 +1,5 @@
 <?php
-    require_once(__DIR__. '/config/connect.php');
+    require_once(__DIR__ . '/common/connect.php');
 ?>
 <!doctype html>
 <html lang="en">
@@ -32,10 +32,15 @@
                     <div class="col-md-12">
                         <div class="panel panel-info">
                             <div class="panel-heading">
-                                <?php echo 'id:'.$value['id'] . ' - ผู้ตั้งกระทู้ : ' . $value['name'] . ' - Image : '. $value['picture'] ?>
+                                <div><?php echo 'ผู้ตั้งกระทู้ : ' . $value['name'] . ' - Image : '. $value['picture'] ?></div>
+                                <div>
+                                    <a href="edit.php?id=<?php echo $value['id'] ?>">edit</a>
+                                    |
+                                    <a href="common/delete_posts.php?id=<?php echo $value['id']?>">delete</a>
+                                </div>
                             </div>
                             <div class="panel-body"><?php echo $value['details'] ?></div>
-                            <div class="panel-footer"><?php echo $value['time'] ?></div>
+                            <div class="panel-footer"><?php echo $value['datetime'] ?></div>
                         </div>
                     </div>
         <?php

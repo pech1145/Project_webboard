@@ -39,7 +39,12 @@
                                     <a href="common/delete_posts.php?id=<?php echo $value['id']?>">delete</a>
                                 </div>
                             </div>
-                            <div class="panel-body"><?php echo $value['details'] ?></div>
+                            <div class="panel-body">
+                                <?php echo $value['details'] ?>
+                                <div class="text-right">
+                                    <a href="post.php?id=<?php echo $value['id'] ?>">อ่านต่อ >>></a>
+                                </div>
+                            </div>
                             <div class="panel-footer"><?php echo $value['datetime'] ?></div>
                         </div>
                     </div>

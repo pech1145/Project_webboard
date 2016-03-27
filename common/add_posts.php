@@ -25,6 +25,7 @@ if(isset($_POST)){
     if($stmt->execute($param)){
         header('Location: ../index.php');
     }
-
+    // close connect database
+    $handle = null;
 }
 

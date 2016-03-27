@@ -43,7 +43,11 @@
         $stmt->bindValue(':details', $_POST['details']);
         
         if($stmt->execute()){
+            // close connect database
+            $handle = null;
             echo 'update posts id = ' . $id . ' success';
             echo "<meta http-equiv='refresh' content='3;URL=../index.php'>";
         }
     }
+// close connect database
+$handle = null;

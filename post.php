@@ -12,122 +12,167 @@ require_once(__DIR__ . '/common/connect.php');
 
     <!-- Bootstrap -->
     <link href="asset/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .display-none {
+            display: none;
+        }
+    </style>
 </head>
 <body>
 
+
 <div class="container">
-    <div class="row">
-    <?php
-        if(isset($_GET['id']) || $_GET != ''){
-            $id = $_GET['id'];
-            $output = [];
+    <div class="row" id="element">
 
-            $sql = 'SELECT * FROM posts WHERE id=:id';
-            $stmtPosts = $handle->prepare($sql);
-            $stmtPosts->bindValue(':id', $id, PDO::PARAM_INT);
-            $stmtPosts->execute();
 
-            // posts row = 0 = false
-            if($stmtPosts->rowCount()){
-                $post = $stmtPosts->fetch(PDO::FETCH_ASSOC);
+        <?php
+        if (isset($_GET['id']) || $_GET != '') {
+        $id = $_GET['id'];
+        $output = [];
 
-    ?>
-                <div class="col-md-12">
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <?php echo 'id:'.$post['id'] . ' - ผู้ตั้งกระทู้ : ' . $post['name'] . ' - Image : '. $post['picture'] ?>
+        $sql = 'SELECT * FROM posts WHERE id=:id';
+        $stmtPosts = $handle->prepare($sql);
+        $stmtPosts->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmtPosts->execute();
+
+        // posts row = 0 = false
+        if ($stmtPosts->rowCount()) {
+            $post = $stmtPosts->fetch(PDO::FETCH_ASSOC);
+            ?>
+
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <?php echo $post['title'] ?> - picture <?php echo $post['picture'] ?><br>
+                        ผู้ตั้งกระทู้ <?php echo $post['name'] ?>
+                        <div class="text-right">
+                            <a href="edit.php?id=<?php echo $post['id'] ?>" style="color: #FFFFFF;">edit</a>
+                            |
+                            <a href="common/delete_posts.php?id=<?php echo $post['id']?>" style="color: #FFFFFF;">delete</a>
                         </div>
-                        <div class="panel-body"><?php echo $post['details'] ?></div>
-                        <div class="panel-footer"><?php echo $post['time'] ?></div>
                     </div>
+                    <div class="panel-body">
+                        <?php echo $post['details'] ?>
+                    </div>
+                    <div class="panel-footer"><?php echo $post['datetime'] ?></div>
                 </div>
-    <?php
+            </div>
 
+            <!-------------------------- comments -------------------------------->
+            <?php
+            // select table comments
+            $sql = 'SELECT * FROM comments WHERE post_id=:post_id ORDER BY comment_id ASC ';
+            $stmtComments = $handle->prepare($sql);
+            $stmtComments->bindValue(':post_id', $id, PDO::PARAM_INT);
+            $stmtComments->execute();
 
-                $sql = 'SELECT * FROM comments WHERE post_id=:post_id AND comment_id=0';
-                $stmtComments = $handle->prepare($sql);
-                $stmtComments->bindValue(':post_id', $post['id'], PDO::PARAM_INT);
-                $stmtComments->execute();
+            // comments row = 0 = false
+            if ($stmtComments->rowCount()) {
+                $comments = $stmtComments->fetchAll(PDO::FETCH_ASSOC);
 
-                // comments row = 0 = false
-                if($stmtComments->rowCount()){
-                    $comments = $stmtComments->fetchAll(PDO::FETCH_ASSOC);
-
-                    // loop comments
-                    foreach ($comments as $comment) {
-    ?>
-                        <div class="col-md-12">
-                            <div class="panel panel-info">
-                                <div class="panel-heading">
-                                    <?php echo 'id:'.$comment['id'] . ' - ' . $comment['comply'] ?>
+                // loop comments
+                foreach ($comments as $comment) {
+                    ?>
+                    <div class="col-md-12">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                ความคิดเห็นที่  <span class="cm-id"><?php echo $comment['comment_id'] ?></span>
+                                <div class="text-right">
+                                    <a href="javascript:void(0)" class="edit-comment" data-post-id="<?php echo $id ?>">edit</a>
+                                    |
+                                    <a href="common/delete_comment.php?post_id=<?php echo $id ?>&cm_id=<?php echo $comment['comment_id'] ?>">delete</a>
                                 </div>
-                                <div class="panel-body">
-                                    <?php echo $comment['details'] ?> <br>
-                                    <?php //echo $comment['time'] ?>
-                                    <hr>
+                            </div>
+                            <div class="panel-body">
+                                <div class="details"><?php echo $comment['details'] ?></div>
+                                <hr>
+                                <?php
+                                $sql = 'SELECT * FROM replys WHERE comment_id=:comment_id';
+                                $stmt = $handle->prepare($sql);
+                                $stmt->bindValue(':comment_id', $comment['comment_id'], PDO::PARAM_INT);
+                                $stmt->execute();
+                                $reply = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    <?php
+                                // loop reply
+                                foreach ($reply as $value) { ?>
 
-                        $sql = 'SELECT * FROM comments WHERE post_id=:post_id AND comment_id=:comment_id';
-                        $stmtReply = $handle->prepare($sql);
-                        $stmtReply->bindValue(':post_id', $post['id'], PDO::PARAM_INT);
-                        $stmtReply->bindValue(':comment_id', $comment['id'], PDO::PARAM_INT);
-                        $stmtReply->execute();
-
-                        // reply row = 0 = false
-                        if($stmtReply->rowCount()){
-                            $reply = $stmtReply->fetchAll(PDO::FETCH_ASSOC);
-
-                            $comment['reply'] = $reply;
-                            $output[] = $comment;
-
-                            foreach ($reply as $value){
-    ?>
-                                <div class="col-md-12">
-                                    <div class="panel panel-info">
-                                        <div class="panel-heading">
-                                            <?php echo 'id:'.$value['id'] . ' - ' . $value['comply'] ?>
+                                    <div class="col-md-12">
+                                        <div class="panel panel-success">
+                                            <div class="panel-heading">
+                                                ตอบกลับที่ <span class="reply-id"><?php echo $value['reply_id']; ?></span>
+                                                <div class="text-right">
+                                                    <a href="javascript:void(0)" class="edit-reply" data-comment-id="<?php echo $value['comment_id'] ?>">edit</a>
+                                                    |
+                                                    <a href="common/delete_reply.php?post_id=<?php echo $comment['post_id']; ?>&comment_id=<?php echo $value['comment_id']; ?>&reply_id=<?php echo $value['reply_id']; ?>">delete</a>
+                                                </div>
+                                            </div>
+                                            <div class="panel-body">
+                                                <?php echo $value['details']; ?>
+                                            </div>
+                                            <div class="panel-footer"><?php echo $value['datetime']; ?></div>
                                         </div>
-                                        <div class="panel-body"><?php echo $value['details'] ?>
+                                    </div>
 
-                                        </div>
-                                        <div class="panel-footer"><?php echo $value['time'] ?></div>
+                                <?php } ?>
+
+                                <!---------------------- reply --------------------->
+
+                                <div class="form-group reply text-center display-none">
+                                    <label for="reply">ตอบกลับ</label>
+                                    <textarea name="reply" id="reply" rows="2" class="form-control"></textarea>
+                                    <div class="text-right" style="margin-top: 5px">
+                                        <input type="reset" value="ล้าง" class="reply_reset btn btn-warning">
+                                        <input type="submit" value="ตอบกลับ" class="reply_submit btn btn-primary">
                                     </div>
                                 </div>
-    <?php
-                            }
-                        }
-    ?>
-                                </div>
-                                <div class="panel-footer"><?php echo $comment['time'] ?></div>
+                                <!----------------------close reply------------------->
+
+
+                            </div>
+                            <div class="panel-footer">
+                                <?php echo $comment['datetime'] ?>
+                                <a style="float: right;" href="javascript:void(1)" class="btn-reply">ตอบกลับ</a>
                             </div>
                         </div>
-    <?php
+                    </div>
 
-                    }
-                }
-                $print['post'] = $post;
-                $print['comments_reply'] = $output;
-            }
-//            echo '<pre>';
-//            print_r( $print);
-        }
-    ?>
-    </div>
-</div>
+                    <?php
+                } // close loop comments
+            } // close if rowCount : comments
 
+                ?>
+                <!--------------------------------------- form add comment ------------------------------------------->
+                <div class="col-md-12" id="form_post">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <label for="details">ความคิดเห็น</label>
+                        </div>
+                        <div class="panel-body" style="padding: 5px">
+                            <textarea name="details" id="details" rows="5" class="form-control"></textarea>
+                            <div class="text-right" style="margin-top: 10px">
+                                <input type="reset" value="ล้างข้อมูล" id="comment_reset" class="btn btn-warning">
+                                <input type="submit" value="โพส" id="comment_submit" class="btn btn-primary">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!------------------------------------  close form add comment --------------------------------------->
+                <?php
 
-
-
-
-
-
-
+            } // close if rowCount : posts
+        } // close if isset($_GET['id'])
+        ?>
+    </div> <!-- row -->
+</div> <!-- container -->
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="asset/js/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="asset/js/bootstrap.min.js"></script>
+
+<script src="library/ckeditor/ckeditor.js"></script>
+
+<script src="asset/js/wtn.js"></script>
 </body>
 </html>
-

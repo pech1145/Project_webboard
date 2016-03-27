@@ -24,7 +24,12 @@ require_once (__DIR__. '/connect.php');
 
         // check delete success
         if ($stmt->execute()) {
+            // close connect database
+            $handle = null;
             echo 'delete posts id = ' . $id . ' success';
             echo "<meta http-equiv='refresh' content='3;URL=../index.php'>";
         }
+
     }
+// close connect database
+$handle = null;

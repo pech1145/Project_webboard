@@ -43,9 +43,15 @@ if (isset($_POST['id_post']) && $_POST['comments'] !== '') {
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                <li><a href="edit.php?id=<?php echo $comment['id'] ?>">edit</a></li>
                                 <li>
-                                    <a href="<?php echo $comment['id'] ?>">delete</a>
+                                    <a data-comment-id="<?php echo $comment['comment_id'] ?>"
+                                       data-post-id="<?php echo $comment['post_id'] ?>"
+                                       class="editComment">edit</a>
+                                </li>
+                                <li>
+                                    <a data-comment-id="<?php echo $comment['comment_id'] ?>"
+                                       data-post-id="<?php echo $comment['post_id'] ?>"
+                                       class="btnConfirmComments">delete</a>
                                 </li>
                             </ul>
                         </div>

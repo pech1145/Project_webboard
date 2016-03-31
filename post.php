@@ -140,9 +140,13 @@ require_once(__DIR__ . '/common/connect.php');
                                                     <span class="caret"></span>
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                    <li><a href="edit.php?id=<?php echo $comment['comment_id'] ?>">edit</a></li>
                                                     <li>
-                                                        <a href="<?php echo $comment['comment_id'] ?>"
+                                                        <a data-comment-id="<?php echo $comment['comment_id'] ?>"
+                                                           data-post-id="<?php echo $comment['post_id'] ?>"
+                                                           class="editComment">edit</a>
+                                                    </li>
+                                                    <li>
+                                                        <a data-comment-id="<?php echo $comment['comment_id'] ?>"
                                                            data-post-id="<?php echo $comment['post_id'] ?>"
                                                            class="btnConfirmComments">delete</a>
                                                     </li>
@@ -176,11 +180,14 @@ require_once(__DIR__ . '/common/connect.php');
                                                                     <span class="caret"></span>
                                                                 </button>
                                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                                    <li><a href="edit.php?id=<?php echo $value['id'] ?>"
-                                                                           class="">edit</a>
+                                                                    <li>
+                                                                        <a data-reply-id="<?php echo $value['reply_id'] ?>"
+                                                                           data-post-id="<?php echo $value['post_id'] ?>"
+                                                                           data-comment-id="<?php echo $value['comment_id'] ?>"
+                                                                           class="editReply">edit</a>
                                                                     </li>
                                                                     <li>
-                                                                        <a href="<?php echo $value['reply_id'] ?>"
+                                                                        <a data-reply-id="<?php echo $value['reply_id'] ?>"
                                                                            data-post-id="<?php echo $value['post_id'] ?>"
                                                                            data-comment-id="<?php echo $value['comment_id'] ?>"
                                                                            class="btnConfirmReply">delete</a>
@@ -189,7 +196,7 @@ require_once(__DIR__ . '/common/connect.php');
                                                             </div>
                                                         </div>
                                                         <div class="panel-body">
-                                                            <?php echo $value['details']; ?>
+                                                            <div class="details-reply"><?php echo $value['details']; ?></div>
                                                         </div>
                                                         <div
                                                             class="panel-footer"><?php echo $value['datetime']; ?></div>

@@ -37,15 +37,33 @@ if (isset($_POST['post_id']) && isset($_POST['comment_id'])) {
                 $stmt->execute();
                 $reply = $stmt->fetch(PDO::FETCH_ASSOC); ?>
 
-                <div class="col-md-12">
+                <div class="col-md-12 node-reply">
                     <div class="panel panel-success">
                         <div class="panel-heading">
                             ตอบกลับที่ <span class="reply-id"><?php echo $reply['reply_id'] ?></span>
-                            <div class="text-right">
-                                <a href="javascript:void(0)" class="edit-reply" data-comment-id="<?php echo $reply['comment_id'] ?>">edit</a>
-                                |
-                                <a href="<?php echo $post_id; ?>" data-comment_id=<?php echo $reply['comment_id']; ?> data-reply_id=<?php echo $reply['reply_id']; ?>>delete</a>
+                            
+                            <div class="dropdown" style="float: right;margin-top: -6px">
+                                <button class="btn btn-default dropdown-toggle" type="button"
+                                        id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="true">
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                    <li>
+                                        <a data-reply-id="<?php echo $reply['reply_id'] ?>"
+                                           data-post-id="<?php echo $reply['post_id'] ?>"
+                                           data-comment-id="<?php echo $reply['comment_id'] ?>"
+                                           class="editReply">edit</a>
+                                    </li>
+                                    <li>
+                                        <a data-reply-id="<?php echo $reply['reply_id'] ?>"
+                                           data-post-id="<?php echo $reply['post_id'] ?>"
+                                           data-comment-id="<?php echo $reply['comment_id'] ?>"
+                                           class="btnConfirmReply">delete</a>
+                                    </li>
+                                </ul>
                             </div>
+                            
                         </div>
                         <div class="panel-body">
                             <?php echo $details ?>

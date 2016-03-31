@@ -1,11 +1,11 @@
 <?php
 require_once (__DIR__. '/connect.php');
 
-    if(isset($_GET['id'])) {
+    if(isset($_POST['id'])) {
 
         // variable
-        $id = $_GET['id'];
-        $direction = 'images' . DIRECTORY_SEPARATOR;
+        $id = $_POST['id'];
+        $direction = '../images' . DIRECTORY_SEPARATOR;
 
         // select picture
         $sql = 'SELECT picture FROM posts WHERE id=:id';
@@ -26,8 +26,11 @@ require_once (__DIR__. '/connect.php');
         if ($stmt->execute()) {
             // close connect database
             $handle = null;
-            echo 'delete posts id = ' . $id . ' success';
-            echo "<meta http-equiv='refresh' content='3;URL=../index.php'>";
+//            echo 'delete posts id = ' . $id . ' success';
+//            echo "<meta http-equiv='refresh' content='3;URL=../index.php'>";
+            echo true;
+        } else {
+            echo false;
         }
 
     }

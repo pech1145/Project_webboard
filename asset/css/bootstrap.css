@@ -3061,7 +3061,7 @@ fieldset[disabled] a.btn {
 }
 .btn-default {
   color: #333;
-  background-color: #fff;
+  background-color: #82B0;
   border-color: #ccc;
 }
 .btn-default:focus,
@@ -5468,7 +5468,7 @@ button.list-group-item-danger.active:focus {
   border-top-right-radius: 3px;
 }
 .panel-heading > .dropdown .dropdown-toggle {
-  color: inherit;
+  /*color: inherit;*/
 }
 .panel-title {
   margin-top: 0;

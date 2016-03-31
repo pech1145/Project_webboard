@@ -1,10 +1,10 @@
 <?php
     require_once (__DIR__ . '/connect.php');
 
-if (isset($_POST['id_post']) && $_POST['details'] !== '') {
+if (isset($_POST['id_post']) && $_POST['comments'] !== '') {
 
     $id_post = $_POST['id_post'];
-    $details = $_POST['details'];
+    $details = $_POST['comments'];
 
     // read comment from table posts
 
@@ -32,23 +32,33 @@ if (isset($_POST['id_post']) && $_POST['details'] !== '') {
             $stmt->execute();
             $comment = $stmt->fetch(PDO::FETCH_ASSOC);
             ?>
-            <div class="col-md-12">
+            <div class="col-md-12 node-comments">
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         ความคิดเห็นที่  <span class="cm-id"><?php echo $comment['comment_id'] ?></span>
-                        <div class="text-right">
-                            <a href="javascript:void(0)" class="edit-comment" data-post-id="<?php echo $id_post ?>">edit</a>
-                            |
-                            <a href="common/delete_comment.php?post_id=<?php echo $id_post ?>&cm_id=<?php echo $comment['comment_id'] ?>">delete</a>
+                        <div class="dropdown" style="float: right;margin-top: -6px">
+                            <button class="btn btn-default dropdown-toggle" type="button"
+                                    id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="true">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <li><a href="edit.php?id=<?php echo $comment['id'] ?>">edit</a></li>
+                                <li>
+                                    <a href="<?php echo $comment['id'] ?>">delete</a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                     <div class="panel-body">
                         <div class="details"><?php echo $comment['details'] ?></div>
                         <hr>
+                        <div class="form-reply"></div>
                     </div>
                     <div class="panel-footer">
                         <?php echo $comment['datetime'] ?>
-                        <a style="float: right;" href="javascript:void(1)" class="btn-reply">ตอบกลับ</a>
+                        <a style="float: right;" href="javascript:void(1)"
+                           class="btn-reply">ตอบกลับ</a>
                     </div>
                 </div>
             </div>

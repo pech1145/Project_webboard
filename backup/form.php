@@ -1,25 +1,35 @@
-<?php require_once(__DIR__ . '/common/connect.php'); ?> <!------เรียกไฟล์ นี้มาใช้แค่ครั้งเดียว เมื่อเข้าเงื่อนไข------->
+<?php require_once(__DIR__ . '/common/connect.php'); ?>
 <!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="image/icon.png">
+
     <title>เพิ่มกระทู้ - WTN web board</title>
-    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="../css/main.css">
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="asset/css/bootstrap.css">
+    <link rel="stylesheet" href="../asset/css/bootstrap.css">
 </head>
 <body>
 
-<?php
-    require_once ('navber-menu.php');
-?>
+<div class="container-fluid" style="border:1px solid #c0c0c0;">
+    <a class="navbar-brand"><img src="../image/welcome.png" style="width: 120px;height: 50px;"></a>
+    <div class="navbar-header" style="float: left">
+        <a href="index.php" class="btn btn-primary navbar-btn">หน้าแรก</a>
+        <a href="form.php" class="btn btn-primary navbar-btn">สร้างกระทู้</a>
+    </div>
+    <form class="navbar-form navbar-left" role="search">
+        <div class="form-group" style="">
+            <input type="text" class="serach" placeholder="Search">
+        </div>
+        <!--                    <button type="submit" class="btn btn-default">Submit</button>-->
+    </form>
+</div>
         <div id="header"></div>  <!---จบ ส่วนbanner-->
-<!-----หน้าฟอร์ม เก็บข้อมูล โดยส่งค่าไปยัง add_posts.php------->
+
 <div class="container">
-    <form action="common/add_posts.php" enctype="multipart/form-data" method="post" style="margin-top: 40px">
+    <form action="../common/add_posts.php" enctype="multipart/form-data" method="post" style="margin-top: 40px">
         <div class="col-lg-12">
             <div class="form-group">
                 <label for="name">ชื่อผู้ตั้งกระทู้</label>
@@ -47,15 +57,15 @@
         </div>
     </form>
 </div>
-<!------ส่วนเรียกใช้งาน jQuery JS bootstrap------->
+
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="asset/js/jquery.min.js"></script>
+<script src="../asset/js/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="asset/js/bootstrap.min.js"></script>
-<script src="library/ckeditor/ckeditor.js"></script>
+<script src="../asset/js/bootstrap.min.js"></script>
+<script src="../library/ckeditor/ckeditor.js"></script>
 
 <script>
-    CKEDITOR.replace('details'); //คำสั่งแก้ไข Details
+    CKEDITOR.replace('details');
 </script>
 </body>
 </html>

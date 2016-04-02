@@ -23,6 +23,7 @@ if(isset($_POST)){
     $param[':picture'] = $picture;
 
     if($stmt->execute($param)){
+        $_SESSION['add-posts'] = true;
         header('Location: ../index.php');
     }
     // close connect database

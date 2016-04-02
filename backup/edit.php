@@ -1,14 +1,14 @@
-<?php require_once (__DIR__. '/common/connect.php'); ?>
+<?php require_once(__DIR__ . '/common/connect.php'); ?>
 <!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="image/icon.png">
+
     <title>แก้ไขข้อมูล- WTN web board</title>
-    <link rel="stylesheet" type="text/css" href="css/main.css">
-    <link rel="stylesheet" href="asset/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../css/main.css">
+    <link rel="stylesheet" href="../asset/css/bootstrap.css">
 
 </head>
 <body>
@@ -19,21 +19,32 @@
 
         $sql = 'SELECT * FROM posts WHERE id=:id';
         $stmt = $handle->prepare($sql);
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT); //เก็บค่าทั้งข้อความและตัวเลข
-        $stmt->execute(); //สั่งให้ทำการ execute ใหม่ได้ทันที
-        $post = $stmt->fetch(PDO::FETCH_ASSOC); //ทำการรีเทิร์นค่าเป็น Array indexed ของชื่อคอลัมน์
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $post = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 
 
-        <?php
-        require ('navber-menu.php');
-        ?>
+
+        <div class="container-fluid">
+            <a class="navbar-brand"><img src="../image/welcome.png" style="width: 120px;height: 50px;margin-top: -15px"></a>
+            <div class="navbar-header" style="float: left">
+                <a href="index.php" class="btn btn-primary navbar-btn">หน้าแรก</a>
+                <a href="form.php" class="btn btn-primary navbar-btn">สร้างกระทู้</a>
+            </div>
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group" style="">
+                    <input type="text" class="serach" placeholder="Search">
+                </div>
+
+            </form>
+        </div>
 
 
         <div id="header"></div>
 
         <div class="container">
-            <form action="common/update_posts.php" enctype="multipart/form-data" method="post"style="margin-top: 5px" >
+            <form action="../common/update_posts.php" enctype="multipart/form-data" method="post" style="margin-top: 5px" >
                 <input type="hidden" name="id" value="<?=$post['id'] ?>">
                 <div class="form-group">
                     <label for="name">ชื่อผู้ตั้งกระทู้</label>
@@ -67,13 +78,13 @@
 <?php } ?>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="asset/js/jquery.min.js"></script>
+<script src="../asset/js/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="asset/js/bootstrap.min.js"></script>
-<script src="library/ckeditor/ckeditor.js"></script>
+<script src="../asset/js/bootstrap.min.js"></script>
+<script src="../library/ckeditor/ckeditor.js"></script>
 
 <script>
-    CKEDITOR.replace('details'); //.replace ทำการแทนที่ข้อความเป็นอีกข้อความหนึ่งได้
+    CKEDITOR.replace('details');
 </script>
 </body>
 </html>

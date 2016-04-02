@@ -7,12 +7,12 @@ require_once(__DIR__ . '/common/connect.php');
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="image/icon.png">
+
     <title>WTN web board </title>
-    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="../css/main.css">
     <!-- Bootstrap -->
-    <link href="asset/css/bootstrap.css" rel="stylesheet">
-    <link href="asset/css/smoke.min.css" rel="stylesheet">
+    <link href="../asset/css/bootstrap.css" rel="stylesheet">
+    <link href="../asset/css/smoke.min.css" rel="stylesheet">
 
     <style>
         .panel-heading {
@@ -34,16 +34,28 @@ require_once(__DIR__ . '/common/connect.php');
 <body>
 
         <!-- ส่วนของ header-->
-        <?php
-        require 'navber-menu.php';
-        ?>
+
+        <div class="container-fluid">
+            <a class="navbar-brand"><img src="../image/welcome.png" style="width: 120px;height: 50px;"></a>
+            <div class="navbar-header" style="float: left">
+                <a href="index.php" class="btn btn-primary navbar-btn">หน้าแรก</a>
+                <a href="form.php" class="btn btn-primary navbar-btn">สร้างกระทู้</a>
+            </div>
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group" style="">
+                    <input type="text" class="serach" placeholder="Search">
+                </div>
+
+            </form>
+        </div>
+
 
         <div id="header"></div>  <!---จบ ส่วนbanner-->
 
         <div class="container">
             <div class="row" id="element">
 
-            <!-------ตรวจสอบค่าว่างในกระทู้------->
+
                 <?php
                 if (isset($_GET['id']) || $_GET != '') {
                     $id = $_GET['id'];
@@ -66,11 +78,11 @@ require_once(__DIR__ . '/common/connect.php');
                                 <div class="panel-heading">
 
 
-                                    <?php //เงื่อนไข เช็คค่ารูป ว่ามีไฟลรูปหรือไม่ จะดึงค่า Default รูป No images
+                                    <?php
                                     if(is_file('images/' . $post['picture'])){
                                         echo '<img src="images/'.$post['picture'] .'" class="img-responsive img-thumbnail" style="width: 150px;height: 150px">';
                                     } else {
-                                        echo '<img src="images/error.png" style="width: 100px;height: 100px">';
+                                        echo '<img src="../images/error.png" style="width: 100px;height: 100px">';
                                     }
                                     ?>
 
@@ -95,13 +107,7 @@ require_once(__DIR__ . '/common/connect.php');
                                 <div class="panel-body">
                                     <?php echo $post['details'] ?>
                                 </div>
-                                <div class="panel-footer">
-                                    <?php echo $post['datetime'] ?>
-<!--                                    --><?php
-//                                    include  'time.php';
-//                                    echo thai_date_and_time($post['datetime']);
-//                                    ?>
-                                </div>
+                                <div class="panel-footer"><?php echo $post['datetime'] ?></div>
                             </div>
                         </div>
 
@@ -206,7 +212,7 @@ require_once(__DIR__ . '/common/connect.php');
 
                                         </div>
                                         <div class="panel-footer">
-                                            <?php echo $comment['datetime'] ?> <!-------ดึงเวลาคอมเมนออกมาแสดง------>
+                                            <?php echo $comment['datetime'] ?> <!--------Time Comments--------->
                                             <a style="float: right;" href="javascript:void(1)" class="btn-reply">ตอบกลับ</a>
                                         </div>
                                     </div>
@@ -224,7 +230,7 @@ require_once(__DIR__ . '/common/connect.php');
                                     <label for="details">ความคิดเห็น</label>
                                 </div>
                                 <div class="panel-body" style="padding: 5px">
-                                    <form action="common/add_comment.php" method="post" id="form_post">
+                                    <form action="../common/add_comment.php" method="post" id="form_post">
                                         <input type="hidden" name="id_post" value="<?=$id?>">
                                         <textarea name="comments" id="comments" rows="5" class="form-control"></textarea>
                                         <div class="text-right" style="margin-top: 10px">
@@ -247,15 +253,15 @@ require_once(__DIR__ . '/common/connect.php');
 
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="asset/js/jquery.min.js"></script>
+<script src="../asset/js/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="asset/js/bootstrap.min.js"></script>
-<script src="asset/js/smoke.min.js"></script>
+<script src="../asset/js/bootstrap.min.js"></script>
+<script src="../asset/js/smoke.min.js"></script>
 
-<script src="library/ckeditor/ckeditor.js"></script>
+<script src="../library/ckeditor/ckeditor.js"></script>
 
 <!--<script src="asset/js/wtn.js"></script>-->
-<script src="asset/js/wtn2.js"></script>
+<script src="../asset/js/wtn2.js"></script>
     <script>
         CKEDITOR.replace('comments');
 //        CKEDITOR.replace('reply');

@@ -66,7 +66,7 @@ if (isset($_POST['post_id']) && isset($_POST['comment_id'])) {
                             
                         </div>
                         <div class="panel-body">
-                            <?php echo $details ?>
+                            <div class="details-reply"><?php echo $reply['details']; ?></div>
                         </div>
                         <div class="panel-footer"><?php echo $reply['datetime'] ?></div>
                     </div>

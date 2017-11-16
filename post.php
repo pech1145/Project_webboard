@@ -74,10 +74,9 @@ require_once(__DIR__ . '/common/connect.php');
                                     }
                                     ?>
 
-                                    <?php echo $post['title'] ?>
-<!--                                    - picture --><?php //echo $post['picture'] ?>
+                                    <span style="margin-left: 15px"><?php echo $post['title'] ?></span>
                                     <br>
-                                    ผู้ตั้งกระทู้ <?php echo $post['name'] ?>
+                                    <div style="padding: 10px">ผู้ตั้งกระทู้ <?php echo $post['name'] ?></div>
                                     <div class="dropdown">
                                         <button class="btn btn-default dropdown-toggle" type="button"
                                                 id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
@@ -85,14 +84,36 @@ require_once(__DIR__ . '/common/connect.php');
                                             <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                            <li><a href="edit.php?id=<?php echo $post['id'] ?>">edit</a></li>
+                                            <li><a href="edit.php?id=<?php echo $post['id'] ?>">แก้ไข</a></li>
                                             <li>
-                                                <a href="<?php echo $post['id'] ?>" class="btnConfirmPosts">delete</a>
+                                                <a href="<?php echo $post['id'] ?>" class="btnConfirmPosts">ลบ</a>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="panel-body">
+                                    <div class="row">
+                                        <?php
+                                        $sql = 'SELECT * FROM `product_image` WHERE post_id=:post_id';
+                                        $stmt2 = $handle->prepare($sql);
+                                        $stmt2->bindParam(":post_id", $post['id']);
+                                        $stmt2->execute();
+                                        foreach($stmt2->fetchAll(PDO::FETCH_ASSOC) as $image) {
+                                            ?>
+                                            <div class="col-md-4 col-lg-4 col-sm-3 col-xs-3">
+                                                <?php //เงื่อนไข เช็คค่ารูป ว่ามีไฟลรูปหรือไม่ จะดึงค่า Default รูป No images
+                                                if (is_file('images/products/' . $image['image'])) {
+                                                    echo '<img src="images/products/' . $image['image'] . '" class="img-responsive img-thumbnail">';
+                                                } else {
+                                                    echo '<img src="images/error.png" style="width: 50px;height: 50px">';
+                                                }
+                                                ?>
+                                            </div>
+                                            <?php
+                                        }
+                                        ?>
+                                    </div>
+                                    <br>
                                     <?php echo $post['details'] ?>
                                 </div>
                                 <div class="panel-footer">

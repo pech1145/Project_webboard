@@ -102,9 +102,9 @@ require_once(__DIR__ . '/common/connect.php');
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                        <li><a href="edit.php?id=<?php echo $value['id'] ?>">edit</a></li> <!----แก้ไขข้อมูล id หรือกระทู้------->
+                                        <li><a href="edit.php?id=<?php echo $value['id'] ?>">แก้ไข</a></li> <!----แก้ไขข้อมูล id หรือกระทู้------->
                                         <li>
-                                            <a href="<?php echo $value['id'] ?>" class="btnConfirmPosts">delete</a> <!----ลบข้อมูล id หรือกระทู้------->
+                                            <a href="<?php echo $value['id'] ?>" class="btnConfirmPosts">ลบ</a> <!----ลบข้อมูล id หรือกระทู้------->
                                         </li>
                                     </ul>
                                 </div>
@@ -120,7 +120,7 @@ require_once(__DIR__ . '/common/connect.php');
                                     $stmt2->execute();
                                     foreach($stmt2->fetchAll(PDO::FETCH_ASSOC) as $image) {
                                         ?>
-                                        <div class="col-md-1 col-lg-1 col-sm-2 col-xs-2">
+                                        <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
                                             <?php //เงื่อนไข เช็คค่ารูป ว่ามีไฟลรูปหรือไม่ จะดึงค่า Default รูป No images
                                             if (is_file('images/products/' . $image['image'])) {
                                                 echo '<img src="images/products/' . $image['image'] . '" class="img-responsive img-thumbnail">';

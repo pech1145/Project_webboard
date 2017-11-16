@@ -22,7 +22,7 @@ require_once(__DIR__ . '/common/connect.php');
         }
         .panel-body {
             overflow: hidden;
-            height: 100px;
+            /*height: 100px;*/
             position: relative;
         }
 
@@ -44,10 +44,10 @@ require_once(__DIR__ . '/common/connect.php');
             left: 115px;
         }
         .btn-reply {
-            position: absolute;
+            /*position: absolute;*/
             width: 100px;
-            right: 20px;
-            top: 70px;
+            /*right: 20px;
+            top: 70px;*/
         }
     </style>
 </head>
@@ -111,7 +111,30 @@ require_once(__DIR__ . '/common/connect.php');
 
                             </div>
                             <div class="panel-body">
-                                <?php echo $value['details'] ?> <!----แสดง รายละเอียด ---->
+
+                                <div class="row">
+                                    <?php
+                                    $sql = 'SELECT * FROM `product_image` WHERE post_id=:post_id';
+                                    $stmt2 = $handle->prepare($sql);
+                                    $stmt2->bindParam(":post_id", $value['id']);
+                                    $stmt2->execute();
+                                    foreach($stmt2->fetchAll(PDO::FETCH_ASSOC) as $image) {
+                                        ?>
+                                        <div class="col-md-1 col-lg-1 col-sm-2 col-xs-2">
+                                            <?php //เงื่อนไข เช็คค่ารูป ว่ามีไฟลรูปหรือไม่ จะดึงค่า Default รูป No images
+                                            if (is_file('images/products/' . $image['image'])) {
+                                                echo '<img src="images/products/' . $image['image'] . '" class="img-responsive img-thumbnail">';
+                                            } else {
+                                                echo '<img src="images/error.png" style="width: 50px;height: 50px">';
+                                            }
+                                            ?>
+                                        </div>
+                                        <?php
+                                    }
+                                        ?>
+                                </div>
+
+                                <?php //echo $value['details'] ?> <!----แสดง รายละเอียด ---->
                                 <div class="text-right">
                                     <a href="post.php?id=<?php echo $value['id'] ?>" class="btn-reply">อ่านต่อ >>></a><!-------คำสั่งอ่านต่อ เมื่อมีการกดอ้างอิงจาก id ของกระทู้------->
                                 </div>

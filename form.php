@@ -27,13 +27,18 @@
             </div>
 
             <div class="form-group">
-                <label for="title">หัวกระทู้</label>
+                <label for="picture">รูปโปรไฟล์</label>
+                <input type="file" name="picture" id="picture">
+            </div>
+
+            <div class="form-group">
+                <label for="title">หัวข้อกระทู้</label>
                 <input type="text" name="title" id="title" class="form-control">
             </div>
 
             <div class="form-group">
-                <label for="picture">รูปภาพ</label>
-                <input type="file" name="picture" id="picture">
+                <label for="images">รูปภาพสินค้า</label>
+                <input type="file" name="images[]" multiple max="10" accept="image/x-png,image/gif,image/jpeg" id="images">
             </div>
 
             <div class="form-group">
